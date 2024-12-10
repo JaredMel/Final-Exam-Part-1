@@ -4,6 +4,7 @@
 #include <map>
 #include <deque>
 #include <stack>
+#include <vector>
 using namespace std;
 
 const int SIZE = 10;
@@ -40,6 +41,23 @@ struct Muffin
     }
 };
 
+struct Bracelets
+{
+    string name;
+    string order;
+
+    Bracelets()
+    {
+        string names[SIZE] = {"James", "Jared", "Dominc", "Bob", "Jeffery", "Jessica", "Lisa", "Eric", "Jess", "Willy"};
+        string orders[SIZE] = {"Rainbow bracelet", "Blue bracelet", "Red bracelet", "Yellow bracelet", "Pink bracelet", "Orange bracelet", "Green bracelet", "Purple bracelet", "Black bracelet", "White bracelet"};
+        int ran1 = rand() % 10;
+        int ran2 = rand() % 10;
+        name = names[ran1];
+        order = orders[ran2];
+        cout << "       " << name << " has ordered a " << order << endl;
+    }
+};
+
 
 Node* addCustomer(Node *&);
 void serveCustomer(Node *&);
@@ -48,6 +66,8 @@ int main()
 {
     Node *head = nullptr;
     deque<Muffin> muffinBooth;
+    vector<Bracelets> braceletBooth;
+    
     int prob;
     int count = 1;
 
@@ -60,7 +80,7 @@ int main()
     }
 
     cout << "   Muffin Booth:" << endl;
-    for (size_t i = 0; i < count; i++)
+    for (size_t i = 0; i < 3; i++)
     {
         muffinBooth.push_back(Muffin());
     }
@@ -78,6 +98,7 @@ int main()
         {
             head = addCustomer(head);
         }
+        serveCustomer(head);
 
         cout << "   Muffin Booth:" << endl;
         prob = rand() % 100 + 1;
@@ -86,8 +107,16 @@ int main()
         {
             muffinBooth.push_back(Muffin());
         }
-
-        serveCustomer(head);
+        if (!muffinBooth.empty())
+        {
+            cout <<  "       " << muffinBooth.front().name << " was served" << endl;
+            muffinBooth.pop_front();
+        }
+        else
+        {
+            cout << "       Line is empty" << endl;
+        }
+        
     }
     
 }
