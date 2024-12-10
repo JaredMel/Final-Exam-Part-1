@@ -29,26 +29,32 @@ void serveCustomer(Node *&);
 int main()
 {
     Node *head = nullptr;
+    deque<
     int prob;
     int count = 1;
+
+    cout << "Cycle #" << count << ":" << endl;
+    cout << "   Coffee Booth:" << endl;
 
     for (size_t i = 0; i < 3; i++)
     {
         head = addCustomer(head);
     }
 
-    for (size_t i = 0; i < CYCLES; i++)
+    for (size_t i = 0; i < CYCLES-1; i++)
     {
+        count++;
         cout << "Cycle #" << count << ":" << endl;
+        cout << "   Coffee Booth:" << endl;
         prob = rand() % 100 + 1;
 
         if (prob <= 50)
         {
             head = addCustomer(head);
+            prob = rand() % 100 + 1;
         }
 
         serveCustomer(head);
-        count++;
     }
     
 }
@@ -64,6 +70,7 @@ Node* addCustomer(Node * &hd)
 
     //creates new_node
     Node* new_node = new Node(names[ran1], orders[ran2]);
+    cout << "       " << names[ran1] << " has ordered a " << orders[ran2] << endl;
     //checks if list is empty
     if (hd == nullptr)
     {
@@ -77,14 +84,13 @@ Node* addCustomer(Node * &hd)
         last = last->next;
     }
     last->next = new_node;
-    cout << names[ran1] << " has ordered a " << orders[ran2] << endl;
 
     return hd;
 }
 
 void serveCustomer(Node *&head) {
     if (head == nullptr) {
-        cout << "Line is empty" << endl;
+        cout << "       Line is empty" << endl;
         return;
     }
 
@@ -92,6 +98,6 @@ void serveCustomer(Node *&head) {
 
     head = head->next;
 
-    cout << temp->name << " was served" << endl;
+    cout << "       " << temp->name << " was served" << endl;
     delete temp;
 }
