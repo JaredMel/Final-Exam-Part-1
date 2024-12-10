@@ -23,35 +23,68 @@ struct Node
     }
 };
 
+struct Muffin
+{
+    string name;
+    string order;
+
+    Muffin()
+    {
+        string names[SIZE] = {"James", "Jared", "Dominc", "Bob", "Jeffery", "Jessica", "Lisa", "Eric", "Jess", "Willy"};
+        string orders[SIZE] = {"Reg Muffin", "Pumpkin Spice Muffin", "Latte Muffin", "Hot Coco Muffin", "Expresso Muffin", "Blueberry Muffin", "Cotton Candy Muffin", "Peppermint Muffin", "Mocha Muffin", "Strawberry Muffin"};
+        int ran1 = rand() % 10;
+        int ran2 = rand() % 10;
+        name = names[ran1];
+        order = orders[ran2];
+        cout << "       " << name << " has ordered a " << order << endl;
+    }
+};
+
+
 Node* addCustomer(Node *&);
 void serveCustomer(Node *&);
 
 int main()
 {
     Node *head = nullptr;
-    deque<
+    deque<Muffin> muffinBooth;
     int prob;
     int count = 1;
 
     cout << "Cycle #" << count << ":" << endl;
-    cout << "   Coffee Booth:" << endl;
 
+    cout << "   Coffee Booth:" << endl;
     for (size_t i = 0; i < 3; i++)
     {
         head = addCustomer(head);
     }
 
+    cout << "   Muffin Booth:" << endl;
+    for (size_t i = 0; i < count; i++)
+    {
+        muffinBooth.push_back(Muffin());
+    }
+    
+
     for (size_t i = 0; i < CYCLES-1; i++)
     {
         count++;
         cout << "Cycle #" << count << ":" << endl;
+
         cout << "   Coffee Booth:" << endl;
         prob = rand() % 100 + 1;
 
         if (prob <= 50)
         {
             head = addCustomer(head);
-            prob = rand() % 100 + 1;
+        }
+
+        cout << "   Muffin Booth:" << endl;
+        prob = rand() % 100 + 1;
+
+        if (prob <= 50)
+        {
+            muffinBooth.push_back(Muffin());
         }
 
         serveCustomer(head);
