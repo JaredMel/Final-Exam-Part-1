@@ -5,6 +5,7 @@
 #include <deque>
 #include <stack>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 const int SIZE = 10;
@@ -58,6 +59,23 @@ struct Bracelets
     }
 };
 
+struct Games
+{
+    string name;
+    string order;
+
+    Games()
+    {
+        string names[SIZE] = {"James", "Jared", "Dominc", "Bob", "Jeffery", "Jessica", "Lisa", "Eric", "Jess", "Willy"};
+        string orders[SIZE] = {"Mario", "Sonic", "GTA", "Elden Ring", "Mario Kart", "Orange bracelet", "Green bracelet", "Purple bracelet", "Black bracelet", "White bracelet"};
+        int ran1 = rand() % 10;
+        int ran2 = rand() % 10;
+        name = names[ran1];
+        order = orders[ran2];
+        cout << "       " << name << " has ordered a " << order << endl;
+    }
+};
+
 
 Node* addCustomer(Node *&);
 void serveCustomer(Node *&);
@@ -83,6 +101,12 @@ int main()
     for (size_t i = 0; i < 3; i++)
     {
         muffinBooth.push_back(Muffin());
+    }
+
+    cout << "   Bracelet Booth:" << endl;
+    for (size_t i = 0; i < 3; i++)
+    {
+        braceletBooth.push_back(Bracelets());
     }
     
 
@@ -116,9 +140,25 @@ int main()
         {
             cout << "       Line is empty" << endl;
         }
-        
+
+        cout << "   Bracelet Booth:" << endl;
+        prob = rand() % 100 + 1;
+
+        if (prob <= 50)
+        {
+            braceletBooth.push_back(Bracelets());
+        }
+        if (!braceletBooth.empty())
+        {
+            cout <<  "       " << braceletBooth.front().name << " was served" << endl;
+            rotate(braceletBooth.begin(), braceletBooth.begin()+1, braceletBooth.end());
+            braceletBooth.pop_back();
+        }
+        else
+        {
+            cout << "       Line is empty" << endl;
+        }
     }
-    
 }
 
 //the addNodeToTail function
