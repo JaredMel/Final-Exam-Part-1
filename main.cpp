@@ -7,6 +7,7 @@
 using namespace std;
 
 const int SIZE = 10;
+const int CYCLES = 10;
 
 struct Node
 {
@@ -22,16 +23,38 @@ struct Node
     }
 };
 
-Node* addNodeToTail(Node *&);
+Node* addCustomer(Node *&);
 void serveCustomer(Node *&);
 
 int main()
 {
     Node *head = nullptr;
+    int prob;
+    int count = 1;
+
+    for (size_t i = 0; i < 3; i++)
+    {
+        head = addCustomer(head);
+    }
+
+    for (size_t i = 0; i < CYCLES; i++)
+    {
+        cout << "Cycle #" << count << ":" << endl;
+        prob = rand() % 100 + 1;
+
+        if (prob <= 50)
+        {
+            head = addCustomer(head);
+        }
+
+        serveCustomer(head);
+        count++;
+    }
+    
 }
 
 //the addNodeToTail function
-Node* addNodeToTail(Node * &hd)
+Node* addCustomer(Node * &hd)
 {
     //Declares and initilizes variables
     string names[SIZE] = {"James", "Jared", "Dominc", "Bob", "Jeffery", "Jessica", "Lisa", "Eric", "Jess", "Willy"};
@@ -54,24 +77,21 @@ Node* addNodeToTail(Node * &hd)
         last = last->next;
     }
     last->next = new_node;
-    //returns hd
+    cout << names[ran1] << " has ordered a " << orders[ran2] << endl;
+
     return hd;
 }
 
-// Function to delete the head node
 void serveCustomer(Node *&head) {
     if (head == nullptr) {
         cout << "Line is empty" << endl;
         return;
     }
 
-    // Store current head in a temporary variable
     Node *temp = head;
 
-    // Move head to the next node
     head = head->next;
 
-    // Delete the old head node
-    cout << temp->name << "was served" << endl;
+    cout << temp->name << " was served" << endl;
     delete temp;
 }
